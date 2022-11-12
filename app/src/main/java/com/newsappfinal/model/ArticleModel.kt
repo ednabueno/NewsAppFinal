@@ -23,11 +23,18 @@ class ArticleModel: NewsComponent.Model
          */
         newsArticles = arrayListOf(ArticleData("a", "b", "c", "https://ph.usembassy.gov/u-s-convenes-anti-drug-abuse-coalitions-to-strengthen-philippine-drug-use-prevention-strategies/", "e", "f", "g"))
         try {
-
+            /*
+            ako nasusuya saimu retrofit, pati ika kotlin na dadamay kana, feeling ko nasusulsulan ka
+            lang ni retrofit!
+            Kala garu nindu uurungan ko kamu!
+            si DS ani na dakulon requirements dae ko tgsukuan, kamu pa kaya!
+            Kung abu nindu saku, mayo kamu magigibo dahil gusto ko kamu maging parti kang buhay ko. ayiiee <3
+            :)
+             */
             val retrofit = Retrofit.Builder()
                 .baseUrl(Common.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               // .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
 
             val retrofitApi : ServiceNews = retrofit.create(ServiceNews::class.java)
@@ -35,6 +42,7 @@ class ArticleModel: NewsComponent.Model
             val call = retrofitApi.getsArticles(apiKey, "ph")
 
             i("article", call.toString())
+
             call.enqueue(object : Callback<Website> {
                 override fun onResponse(call: Call<Website>, response: Response<Website>) {
                     val articles = response.body()
@@ -107,6 +115,11 @@ class ArticleModel: NewsComponent.Model
             e.printStackTrace()
             d("Article Fetching...", e.message.toString())
         }
+        /*
+        Sorry na retrofit...kung dae taka pinili kang inot. Wag kna magtampo...
+        At hindi na din ako galit, love, love, love na kita...hemmwaah <3 <3
+        Tao kana nin output...
+         */
         return newsArticles
     }
 

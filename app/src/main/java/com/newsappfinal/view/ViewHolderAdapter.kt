@@ -14,8 +14,6 @@ import com.newsappfinal.model.ArticleData
 import com.newsappfinal.newComponent.NewsComponent
 
 class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleData>? ): RecyclerView.Adapter<ViewHolderAdapter.ViewHolder>(){
-//    private var mContext:Context? = mContext
-//    private var mArticles: ArrayList<ArticleData>? =  mArticles
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view:View = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false)
