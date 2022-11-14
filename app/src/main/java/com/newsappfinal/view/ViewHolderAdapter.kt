@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.androidnetworking.widget.ANImageView
 import com.newsappfinal.R
 import com.newsappfinal.WebActivity
 import com.newsappfinal.model.ArticleData
@@ -21,22 +22,21 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var currentArticle: ArticleData = mArticles!![position]
+        var currentArticle : ArticleData = mArticles!![position]
         holder.title.text = currentArticle.title
         holder.description.text = currentArticle.description
         var author= currentArticle.author
         if(author!!.isEmpty()){
             holder.contributorDate.text = currentArticle.publishAt?.substring(0, 10)
         }else{
-            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt
-//            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt.substring(0, 10)
+//            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt
+            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt?.substring(0, 10)
         }
         //loading the image
- //       holder.image.setImageResource(Int(currentArticle.urlToImage))
-//        holder.image.setErrorImageResId(R.drawable.ic_launcher_background)
-//        holder.image.setDefaultImageResId(R.drawable.ic_launcher_foreground)
-//        holder.image.setImageUrl(currentArticle.urlToImage)
-//        holder.image.setContentDescription(currentArticle.content)
+        holder.image.setErrorImageResId(R.drawable.ic_launcher_background)
+        holder.image.setDefaultImageResId(R.drawable.ic_launcher_foreground)
+        holder.image.setImageUrl(currentArticle.urlToImage)
+        holder.image.setContentDescription(currentArticle.content)
         holder.setItemClickListener(object : NewsComponent.ItemClickListener {
             override fun onClick(view: View, position: Int) {
                 var intent: Intent = Intent(mContext, WebActivity::class.java)
@@ -57,7 +57,7 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
         var title:TextView = view.findViewById(R.id.title_id)
         var description:TextView = view.findViewById(R.id.description_id)
         var contributorDate:TextView = view.findViewById(R.id.contributorDate)
-        var image : ImageView = view.findViewById(R.id.imageView)
+        var image : ANImageView = view.findViewById(R.id.image_id)
         //var image:ANImageView = view.findViewById(R.id.image_id)
         init{
             view.setOnClickListener(this)

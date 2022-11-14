@@ -51,7 +51,12 @@ dependencies {
 //    implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
 //    implementation 'com.squareup.retrofit2:adapter-guava:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-java8:2.5.0'
-//    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+
+
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
 //    implementation 'com.amitshekhar.android:jackson-android-networking:1.0.2'
 
 }

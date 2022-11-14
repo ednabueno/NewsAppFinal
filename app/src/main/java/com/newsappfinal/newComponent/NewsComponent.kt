@@ -3,23 +3,26 @@ package com.newsappfinal.newComponent
 import android.content.Context
 import android.widget.ProgressBar
 import com.newsappfinal.model.ArticleData
+import kotlinx.coroutines.CoroutineDispatcher
 
 interface NewsComponent {
     interface View{
-//        interface MainVew{
-//            fun requestLoadData(mArticles: ArrayList<ArticleData>?)
-//        }
+        interface MainVew{
+            suspend fun loadArticles(mArticles: ArrayList<ArticleData>?)
+        }
         interface WebView{
             fun getUrl():String
         }
     }
     interface Model{
-        fun getNewsFromApi(apiKey: String, mContext: Context): ArrayList<ArticleData>?
+        suspend fun getNewsFromApi(apiKey: String): ArrayList<ArticleData>?
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     interface Presenter{
-        fun getArticles(apiKey:String, mContext: Context): ArrayList<ArticleData>?
-        fun pBarVisibility(pbar:ProgressBar)
+        suspend fun getArticles(apiKey:String): ArrayList<ArticleData>?
+//        fun pBarVisibility(pbar:ProgressBar)
+
     }
     interface ItemClickListener{
             fun onClick(view: android.view.View, position:Int)
