@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity(), NewsComponent.View.MainVew{
     private var recyclerView:RecyclerView? = null
     private val apiKey:String = "98262df4f3a14d19a3b6cc84be8c004e"
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -40,17 +39,19 @@ class MainActivity : AppCompatActivity(), NewsComponent.View.MainVew{
         pbar!!.visibility = View.VISIBLE
     }
 
-    override suspend fun loadArticles(mArticles: ArrayList<ArticleData>?) {
-        GlobalScope.async {
+    override suspend fun loadArticles() {
+        var article: ArrayList<ArticleData>? = null
+        CoroutineScope(Dispatchers.IO).async {
             val articleData: ArrayList<ArticleData>? = presenter?.getArticles(apiKey)
-//            delay(10000)
-            loadArticles(articleData)
+            article = articleData
         }.await()
-        i("loadArticles", mArticles?.size.toString())
-        if (mArticles != null)
+
+        i("loadArticles", article?.size.toString())
+
+        if (article != null)
         {
             pbar!!.visibility = View.GONE
-            recyclerView?.adapter = ViewHolderAdapter(this, mArticles)
+            recyclerView?.adapter = ViewHolderAdapter(this, article)
         }
     }
 }

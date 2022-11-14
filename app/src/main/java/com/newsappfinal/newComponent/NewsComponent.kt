@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 interface NewsComponent {
     interface View{
         interface MainVew{
-            suspend fun loadArticles(mArticles: ArrayList<ArticleData>?)
+            suspend fun loadArticles()
         }
         interface WebView{
             fun getUrl():String
