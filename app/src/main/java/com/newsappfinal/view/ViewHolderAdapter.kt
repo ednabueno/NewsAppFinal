@@ -22,15 +22,15 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var currentArticle : ArticleData = mArticles!![position]
+        val currentArticle : ArticleData = mArticles!![position]
         holder.title.text = currentArticle.title
         holder.description.text = currentArticle.description
-        var author= currentArticle.author
-        if(author!!.isEmpty()){
-            holder.contributorDate.text = currentArticle.publishAt?.substring(0, 10)
+        val author= currentArticle.author
+        if(author == null){
+            holder.contributorDate.text = currentArticle.publishAt.toString().substring(0, 10)
         }else{
 //            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt
-            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt?.substring(0, 10)
+            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt.toString().substring(0, 10)
         }
         //loading the image
         holder.image.setErrorImageResId(R.drawable.ic_launcher_background)
@@ -58,7 +58,6 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
         var description:TextView = view.findViewById(R.id.description_id)
         var contributorDate:TextView = view.findViewById(R.id.contributorDate)
         var image : ANImageView = view.findViewById(R.id.image_id)
-        //var image:ANImageView = view.findViewById(R.id.image_id)
         init{
             view.setOnClickListener(this)
         }

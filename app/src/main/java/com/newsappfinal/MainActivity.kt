@@ -1,6 +1,7 @@
 package com.newsappfinal
 
 import android.os.Bundle
+import android.util.Log.e
 import android.util.Log.i
 import android.view.View
 import android.widget.ProgressBar
@@ -17,33 +18,59 @@ import com.newsappfinal.view.ViewHolderAdapter
 import io.reactivex.internal.operators.single.SingleDoOnSuccess
 import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity(), NewsComponent.View.MainVew{
+class MainActivity : AppCompatActivity(), NewsComponent.View{
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: Presenter
     private var pbar:ProgressBar? = null
     private var recyclerView:RecyclerView? = null
-    private val apiKey:String = "98262df4f3a14d19a3b6cc84be8c004e"
+    //private val apiKey:String = "98262df4f3a14d19a3b6cc84be8c004e"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var items: ArrayList<ArticleData>? = null
+  //      var items: ArrayList<ArticleData>? = null
         pbar = binding.progressBar
         recyclerView = binding.recycleView
 
-        presenter = Presenter()
-        recyclerView?.layoutManager = LinearLayoutManager(this)
+        presenter = Presenter(this)
+        presenter.requestDataFromServer()
+       // pbar!!.visibility = View.VISIBLE
 
-        pbar!!.visibility = View.VISIBLE
-
-        GlobalScope.launch(Dispatchers.Main){
+        /*GlobalScope.launch(Dispatchers.Main){
             pbar!!.visibility = View.GONE
             val articleData: ArrayList<ArticleData> = presenter.getArticles(apiKey)
             i("LoadData", articleData.size.toString())
             recyclerView?.adapter = ViewHolderAdapter(this@MainActivity, articleData)
       }
+        Thread.sleep(10000)
+
+         */
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
+    override fun showProgress() {
+        pbar?.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        pbar?.visibility = View.GONE
+    }
+
+    override fun setDataToRecyclerView(mArcticles: ArrayList<ArticleData>) {
+        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView?.adapter = ViewHolderAdapter(this@MainActivity, mArcticles)
+    }
+
+    override fun onResponseFailure(throwable: Throwable) {
+        e("MainActivity", throwable.message.toString())
+        Toast.makeText(this@MainActivity, throwable.message.toString(), Toast.LENGTH_LONG).show()
+        finish()
     }
 
 //    override suspend fun loadArticles():ArrayList<ArticleData> {
