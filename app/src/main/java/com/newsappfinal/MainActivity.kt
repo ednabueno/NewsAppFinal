@@ -19,7 +19,7 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), NewsComponent.View.MainVew{
     private lateinit var binding: ActivityMainBinding
-    private var presenter: Presenter? = null
+    private lateinit var presenter: Presenter
     private var pbar:ProgressBar? = null
     private var recyclerView:RecyclerView? = null
     private val apiKey:String = "98262df4f3a14d19a3b6cc84be8c004e"
@@ -37,21 +37,36 @@ class MainActivity : AppCompatActivity(), NewsComponent.View.MainVew{
         recyclerView?.layoutManager = LinearLayoutManager(this)
 
         pbar!!.visibility = View.VISIBLE
-    }
 
-    override suspend fun loadArticles() {
-        var article: ArrayList<ArticleData>? = null
-        CoroutineScope(Dispatchers.IO).async {
-            val articleData: ArrayList<ArticleData>? = presenter?.getArticles(apiKey)
-            article = articleData
-        }.await()
-
-        i("loadArticles", article?.size.toString())
-
-        if (article != null)
-        {
+        GlobalScope.launch(Dispatchers.Main){
             pbar!!.visibility = View.GONE
-            recyclerView?.adapter = ViewHolderAdapter(this, article)
-        }
+            val articleData: ArrayList<ArticleData> = presenter.getArticles(apiKey)
+            i("LoadData", articleData.size.toString())
+            recyclerView?.adapter = ViewHolderAdapter(this@MainActivity, articleData)
+      }
     }
+
+//    override suspend fun loadArticles():ArrayList<ArticleData> {
+//        var article: ArrayList<ArticleData>
+//
+//        var coroutine = CoroutineScope(Dispatchers.IO).async {
+//            val articleData: ArrayList<ArticleData> = presenter.getArticles(apiKey)
+//            i("coroutine", articleData.size.toString())
+//            article = articleData
+//            article
+//        }
+//
+//        return coroutineScope {
+//            withContext(Dispatchers.Default){
+//                val a = coroutine.await()
+//                i("coroutine", a.size.toString())
+//                a
+//            }
+//
+//        }
+//
+//        i("loadArticles", coroutine?.size.toString())
+//
+//
+//    }
 }

@@ -8,17 +8,16 @@ import kotlinx.coroutines.CoroutineDispatcher
 interface NewsComponent {
     interface View{
         interface MainVew{
-            suspend fun loadArticles()
+            //suspend fun loadArticles():ArrayList<ArticleData>
         }
         interface WebView{
             fun getUrl():String
         }
     }
     interface Model{
-        suspend fun getNewsFromApi(apiKey: String): ArrayList<ArticleData>?
+        suspend fun getNewsFromApi(apiKey: String): ArrayList<ArticleData>
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     interface Presenter{
         suspend fun getArticles(apiKey:String): ArrayList<ArticleData>?
 //        fun pBarVisibility(pbar:ProgressBar)

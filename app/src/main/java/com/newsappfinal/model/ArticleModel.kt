@@ -15,10 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ArticleModel: NewsComponent.Model
 {
-    @SuppressLint("SuspiciousIndentation")
-    override suspend fun getNewsFromApi(apiKey: String): ArrayList<ArticleData>?
+    override suspend fun getNewsFromApi(apiKey: String): ArrayList<ArticleData>
     {
-        var newsArticles: ArrayList<ArticleData>? = null
+        var newsArticles:ArrayList<ArticleData> = arrayListOf()
 //        newsArticles = arrayListOf(ArticleData("a", "b", "c", "https://ph.usembassy.gov/u-s-convenes-anti-drug-abuse-coalitions-to-strengthen-philippine-drug-use-prevention-strategies/", "e", "f", "g"))
             try {
                 val retrofit = Retrofit.Builder()
