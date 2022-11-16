@@ -8,7 +8,7 @@ import android.webkit.WebView
 import com.newsappfinal.databinding.ActivityWebBinding
 import com.newsappfinal.newComponent.NewsComponent
 
-class WebActivity : AppCompatActivity(), NewsComponent.View.WebView {
+class WebActivity : AppCompatActivity(){
     private lateinit var binding: ActivityWebBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,4 @@ class WebActivity : AppCompatActivity(), NewsComponent.View.WebView {
         finish()
     }
 
-    override fun getUrl(): String {
-        TODO("Not yet implemented")
-    }
 }

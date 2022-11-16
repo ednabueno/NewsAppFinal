@@ -29,7 +29,6 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
         if(author == null){
             holder.contributorDate.text = currentArticle.publishAt.toString().substring(0, 10)
         }else{
-//            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt
             holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt.toString().substring(0, 10)
         }
         //loading the image
