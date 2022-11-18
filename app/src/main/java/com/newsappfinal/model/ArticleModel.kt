@@ -1,15 +1,12 @@
 package com.newsappfinal.model
 
-import android.annotation.SuppressLint
-import android.util.Log.*
+import android.util.Log.e
+import android.util.Log.i
 import com.newsappfinal.newComponent.NewsComponent
 import com.newsappfinal.newComponent.ServiceNews
-import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class ArticleModel: NewsComponent.Model
 {

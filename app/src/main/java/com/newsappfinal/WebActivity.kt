@@ -15,11 +15,12 @@ class WebActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityWebBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
-        var webView : WebView = binding.webView
+        val webView : WebView = binding.webView
 
-        var intent: Intent? = getIntent()
-        var url = intent!!.getStringExtra("url_key")
+        val intent: Intent? = getIntent()
+        val url = intent!!.getStringExtra("url_key")
         webView.loadUrl(url!!)
     }
 

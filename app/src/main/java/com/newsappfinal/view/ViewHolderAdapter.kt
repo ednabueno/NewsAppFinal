@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.widget.ANImageView
@@ -16,26 +15,27 @@ import com.newsappfinal.newComponent.NewsComponent
 
 class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleData>? ): RecyclerView.Adapter<ViewHolderAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { //inflated of layout
+        //recycler of the view holder
         var view:View = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) { //recycleview holder  reusing of the views
         val currentArticle : ArticleData = mArticles!![position]
         holder.title.text = currentArticle.title
         holder.description.text = currentArticle.description
         val author= currentArticle.author
+        val dte: String = currentArticle.publishAt.toString().substring(0, 10)
         if(author == null){
-            holder.contributorDate.text = currentArticle.publishAt.toString().substring(0, 10)
+            holder.contributorDate.text = dte
         }else{
-            holder.contributorDate.text = currentArticle.author + " | " + currentArticle.publishAt.toString().substring(0, 10)
+            holder.contributorDate.text = author.plus(" | ").plus(dte) //Smart Cast
         }
         //loading the image
         holder.image.setErrorImageResId(R.drawable.ic_launcher_background)
         holder.image.setDefaultImageResId(R.drawable.ic_launcher_foreground)
         holder.image.setImageUrl(currentArticle.urlToImage)
-        holder.image.setContentDescription(currentArticle.content)
         holder.setItemClickListener(object : NewsComponent.ItemClickListener {
             override fun onClick(view: View, position: Int) {
                 var intent: Intent = Intent(mContext, WebActivity::class.java)

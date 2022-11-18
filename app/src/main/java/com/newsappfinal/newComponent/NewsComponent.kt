@@ -1,9 +1,6 @@
 package com.newsappfinal.newComponent
 
-import android.content.Context
-import android.widget.ProgressBar
 import com.newsappfinal.model.ArticleData
-import kotlinx.coroutines.CoroutineDispatcher
 
 interface NewsComponent {
     interface View{
@@ -22,7 +19,7 @@ interface NewsComponent {
     }
 
     interface Presenter{
-        fun requestDataFromServer()
+        fun requestDataFromApi()
 
     }
     interface ItemClickListener{

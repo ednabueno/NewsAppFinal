@@ -8,20 +8,20 @@ import com.newsappfinal.newComponent.NewsComponent
 class Presenter(var mView : NewsComponent.View): NewsComponent.Presenter, NewsComponent.Model.OnFinishedListener {
     private var articleModel = ArticleModel()
 
-    override fun requestDataFromServer() {
-        mView?.showProgress()
+    override fun requestDataFromApi() {
+        mView.showProgress()
         articleModel.getNewsArticles(this)
     }
 
     override fun onFinished(mArcticles: ArrayList<ArticleData>) {
         i("onFinished", mArcticles.size.toString())
         mView.setDataToRecyclerView(mArcticles)
-        mView?.hideProgress()
+        mView.hideProgress()
     }
 
     override fun onFailure(t: Throwable) {
-        mView?.onResponseFailure(t)
-        mView?.hideProgress()
+        mView.onResponseFailure(t)
+        mView.hideProgress()
     }
 
 }
