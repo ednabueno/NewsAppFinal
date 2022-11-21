@@ -6,12 +6,12 @@ interface NewsComponent {
     interface View{
         fun showProgress()
         fun hideProgress()
-        fun setDataToRecyclerView(mArcticles: ArrayList<ArticleData>)
+        fun loadArticles(articleList: ArrayList<ArticleData>)
         fun onResponseFailure(throwable: Throwable)
     }
     interface Model{
         interface OnFinishedListener{
-            fun onFinished(mArcticles:ArrayList<ArticleData>)
+            fun onFinished(articleList:ArrayList<ArticleData>)
             fun onFailure(t: Throwable)
         }
         fun getNewsArticles(onFinishedListener: OnFinishedListener)
@@ -19,7 +19,7 @@ interface NewsComponent {
     }
 
     interface Presenter{
-        fun requestDataFromApi()
+        fun requestData()
 
     }
     interface ItemClickListener{

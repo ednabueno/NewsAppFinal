@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity(), NewsComponent.View{
         recyclerView = binding.recycleView
 
         presenter = Presenter(this)
-        presenter.requestDataFromApi() //remove the unbinding and binding on the activity
+        //I think I need a dependency injection for this one.
+        presenter.requestData() //unbinding and binding on the activity
 
     }
 
@@ -46,10 +47,10 @@ class MainActivity : AppCompatActivity(), NewsComponent.View{
     override fun hideProgress() {
         pbar?.visibility = View.GONE
     }
-    //remove the mArticles
-    override fun setDataToRecyclerView(mArcticles: ArrayList<ArticleData>) {
+
+    override fun loadArticles(articleList: ArrayList<ArticleData>) {
         recyclerView?.layoutManager = LinearLayoutManager(this)
-        recyclerView?.adapter = ViewHolderAdapter(this@MainActivity, mArcticles)
+        recyclerView?.adapter = ViewHolderAdapter(this@MainActivity, articleList)
     }
 
     override fun onResponseFailure(throwable: Throwable) {

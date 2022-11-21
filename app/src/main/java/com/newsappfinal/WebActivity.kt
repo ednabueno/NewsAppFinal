@@ -19,7 +19,7 @@ class WebActivity : AppCompatActivity(){
 
         val webView : WebView = binding.webView
 
-        val intent: Intent? = getIntent()
+        val intent: Intent? = intent
         val url = intent!!.getStringExtra("url_key")
         webView.loadUrl(url!!)
     }
