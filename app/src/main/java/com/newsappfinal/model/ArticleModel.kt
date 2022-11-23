@@ -14,18 +14,27 @@ class ArticleModel: NewsComponent.Model
         var serviceNews:ServiceNews = RetrofitClient.getClient(Common.BASE_URL).create(ServiceNews::class.java)
 
         val call = serviceNews.getsArticles(Common.API_KEY, "ph")
-        call.enqueue(object : Callback<Website>{
-            override fun onResponse(call: Call<Website>, response: Response<Website>) {
-                val articles:ArrayList<ArticleData>? = response.body()?.arrayListOfArticles
-                i("getNewsArticles", articles!!.size.toString())
-                onFinishedListener.onFinished(articles)
-            }
+        call.timeout()
+        try {
+            call.enqueue(object : Callback<Website> {
+                override fun onResponse(call: Call<Website>, response: Response<Website>) {
+                    if (response.isSuccessful) {
+                        val articles: ArrayList<ArticleData>? = response.body()?.arrayListOfArticles
+                        i("getNewsArticlesResponse", articles!!.size.toString())
+                        onFinishedListener.onFinished(articles)
+                    } else {
+                        onFinishedListener.onFinished(arrayListOf())
+                    }
+                }
 
-            override fun onFailure(call: Call<Website>, t: Throwable) {
-                e("getNewsArticles", t.toString())
-                onFinishedListener.onFailure(t)
-            }
+                override fun onFailure(call: Call<Website>, t: Throwable) {
+                    e("getNewsArticlesFailure", t.toString())
+                    onFinishedListener.onFailure(t)
+                }
 
-        })
+            })
+        }catch (ex:Exception){
+          onFinishedListener.onFailure(ex)
+        }
     }
 }

@@ -15,13 +15,12 @@ import com.newsappfinal.newComponent.NewsComponent
 
 class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleData>? ): RecyclerView.Adapter<ViewHolderAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { //inflated of layout
-        //recycler of the view holder
-        var view:View = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view:View = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) { //recycleview holder  reusing of the views
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentArticle : ArticleData = mArticles!![position]
         holder.title.text = currentArticle.title
         holder.description.text = currentArticle.description
@@ -30,7 +29,7 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
         if(author == null){
             holder.contributorDate.text = dte
         }else{
-            holder.contributorDate.text = author.plus(" | ").plus(dte) //Smart Cast
+            holder.contributorDate.text = author.plus(" | ").plus(dte)
         }
         //loading the image
         holder.image.setErrorImageResId(R.drawable.ic_launcher_background)
@@ -38,10 +37,10 @@ class ViewHolderAdapter(var mContext:Context, var mArticles: ArrayList<ArticleDa
         holder.image.setImageUrl(currentArticle.urlToImage)
         holder.setItemClickListener(object : NewsComponent.ItemClickListener {
             override fun onClick(view: View, position: Int) {
-                var intent: Intent = Intent(mContext, WebActivity::class.java)
+                val intent: Intent = Intent(mContext, WebActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.putExtra("url_key", currentArticle.url)
-                mContext!!.startActivity(intent)
+                mContext.startActivity(intent)
             }
 
         })
